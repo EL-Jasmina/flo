@@ -150,25 +150,19 @@ struct ContentView: View {
                             }.opacity(playerViewModel.isMediaFailed ? 0 : 1)
                         }
 
+                    }.onTapGesture {
+                        isPlayerExpanded = true
                     }
                 }
             }
-            .sheet(
-                isPresented: $isPlayerExpanded,
-                onDismiss: {
-                    isPlayerExpanded = false
-                }
-            ) {
+            .fullScreenCover(isPresented: $isPlayerExpanded) {
                 ZStack {
                     Color(.systemBackground)
                         .ignoresSafeArea()
-                        .clipShape(
-                            RoundedRectangle(
-                                cornerRadius: 15,
-                                style: .continuous
-                            )
-                        )
-                    PlayerView(isExpanded: $isPlayerExpanded, viewModel: PlayerViewModel())
+                    PlayerView(
+                        isExpanded: $isPlayerExpanded,
+                        viewModel: PlayerViewModel()
+                    )
                 }
             }
             .id(tabViewID)
