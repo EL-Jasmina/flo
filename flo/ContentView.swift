@@ -72,7 +72,9 @@ struct ContentView: View {
             }
             .tabBarMinimizeBehavior(.onScrollDown)
             .tabViewBottomAccessory {
-                if playerViewModel.hasNowPlaying() {
+                if playerViewModel.hasNowPlaying()
+                    && !playerViewModel.shouldHidePlayer
+                {
                     HStack {
                         if let image = UIImage(
                             contentsOfFile: playerViewModel.getAlbumCoverArt()
@@ -153,6 +155,8 @@ struct ContentView: View {
                     }.onTapGesture {
                         isPlayerExpanded = true
                     }
+                } else {
+                    EmptyView()
                 }
             }
             .fullScreenCover(isPresented: $isPlayerExpanded) {
